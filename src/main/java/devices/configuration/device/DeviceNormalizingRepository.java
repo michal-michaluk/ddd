@@ -88,15 +88,7 @@ class DeviceNormalizingRepository implements DeviceRepository {
             return new Device(
                     deviceId,
                     new Ownership(operator, provider),
-                    longitude == null ? null : new Location(
-                            street,
-                            houseNumber,
-                            city,
-                            postalCode,
-                            state,
-                            country,
-                            new Location.Coordinates(longitude, latitude)
-                    ),
+                    location(),
                     openingHours(),
                     Settings.builder()
                             .autoStart(autoStart)
@@ -106,6 +98,18 @@ class DeviceNormalizingRepository implements DeviceRepository {
                             .showOnMap(showOnMap)
                             .publicAccess(publicAccess)
                             .build()
+            );
+        }
+
+        private Location location() {
+            return longitude == null ? null : new Location(
+                    street,
+                    houseNumber,
+                    city,
+                    postalCode,
+                    state,
+                    country,
+                    new Location.Coordinates(longitude, latitude)
             );
         }
 
