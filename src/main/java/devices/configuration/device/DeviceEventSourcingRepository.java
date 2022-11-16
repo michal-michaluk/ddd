@@ -73,10 +73,12 @@ class DeviceEventSourcingRepository implements DeviceRepository {
 
     @Repository
     interface EventRepository extends CrudRepository<DeviceEventEntity, UUID> {
-        @Query(value = "select distinct on (type) *" +
-                " from device_events" +
-                " where device_id = :deviceId" +
-                " order by type, time desc", nativeQuery = true)
+        @Query(value = """
+                select distinct on (type) *
+                 from device_events
+                 where device_id = :deviceId
+                 order by type, time desc
+                """, nativeQuery = true)
         List<DeviceEventEntity> findByDeviceId(String deviceId);
     }
 
